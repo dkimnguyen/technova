@@ -60,3 +60,5 @@ docker-compose up -d
 # Backend API: http://localhost:3001
 # MinIO Console: http://localhost:9001
 ```
+
+here is my extra comment in the readme 
