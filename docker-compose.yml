@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   # PostgreSQL Database
@@ -7,10 +7,10 @@ services:
     container_name: technova-db
     environment:
       POSTGRES_USER: technova_admin
-      POSTGRES_PASSWORD: TechN0va2024!  # Intentionally weak password
+      POSTGRES_PASSWORD: TechN0va2024! # Intentionally weak password
       POSTGRES_DB: technova_health
     ports:
-      - "5434:5432"  # Using 5434 externally to avoid conflict with system PostgreSQL
+      - "5434:5432" # Using 5434 externally to avoid conflict with system PostgreSQL
     volumes:
       - ./database/init:/docker-entrypoint-initdb.d
       - postgres-data:/var/lib/postgresql/data
@@ -33,12 +33,12 @@ services:
 
   # MinIO (S3-compatible storage)
   minio:
-    image: minio/minio:latest
+    image: dhi.io/minio:latest
     container_name: technova-minio
     entrypoint: /bin/sh
     environment:
       MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin  # Intentionally weak password
+      MINIO_ROOT_PASSWORD: minioadmin # Intentionally weak password
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -62,7 +62,7 @@ services:
       MINIO_PORT: 9000
       MINIO_ACCESS_KEY: minioadmin
       MINIO_SECRET_KEY: minioadmin
-      JWT_SECRET: super_secret_key_123  # Intentionally weak secret
+      JWT_SECRET: super_secret_key_123 # Intentionally weak secret
       NODE_ENV: development
     ports:
       - "3001:3001"
@@ -86,7 +86,7 @@ services:
       - WDS_SOCKET_PORT=0
     # No need for REACT_APP_API_URL - frontend detects port and adjusts
     ports:
-      - "3000:3000"  # Direct access (bypass WAF) - for teaching
+      - "3000:3000" # Direct access (bypass WAF) - for teaching
     volumes:
       - shared-logs:/var/log/shared # Add shared volume to frontend
     depends_on:
@@ -101,8 +101,8 @@ services:
       dockerfile: Dockerfile
     container_name: technova-waf
     ports:
-      - "80:80"     # Main access/ point (through WAF)
-      - "8080:80"   # Alternative port
+      - "80:80" # Main access/ point (through WAF)
+      - "8080:80" # Alternative port
     volumes:
       - shared-logs:/var/log/shared
     depends_on:
@@ -228,7 +228,7 @@ services:
     image: registry.community.greenbone.net/community/redis-server
     restart: on-failure
     volumes:
-      - redis_socket_vol:/run/redis/ 
+      - redis_socket_vol:/run/redis/
     networks:
       - technova-network
     profiles:
@@ -386,7 +386,7 @@ services:
       - notus_data_vol:/var/lib/notus
       - ospd_openvas_socket_vol:/run/ospd
       - redis_socket_vol:/run/redis/
-      - openvas_data_vol:/etc/openvas/ 
+      - openvas_data_vol:/etc/openvas/
       - openvas_log_data_vol:/var/log/openvas
     depends_on:
       redis-server:
